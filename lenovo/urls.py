@@ -28,6 +28,7 @@ urlpatterns = [
     path('', home, name="home"),
     path('accounts/', include('userprofile.urls', namespace='userprofile')),
     path("news/", include('new.urls', namespace='new')),
+    path("gallery/", include('gallery.urls', namespace='gallery')),
     # path('groups/', groups_view, name="groups"),
     # path('', users_view, name="users"),
     # path('update-')

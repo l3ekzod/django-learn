@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'poll',
     'userprofile',
     'new',
-    'extra'
+    'extra',
+    'gallery'
 ]
 
 MIDDLEWARE = [
