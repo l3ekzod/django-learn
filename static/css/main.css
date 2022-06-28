@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: bisque;
+    color: red;
+
+}
+
+.container {
+    width: 70%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ff000023;
+}
+
+a {
+    text-decoration: none;
+    font-size: larger;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    transform: scale(1.1);
+}
+
+a:hover {
+    transition: transform .5s;
+    background-color: red;
+    color: white;
+}
+
+ol {
+    margin: 0 20px;
+}
+
+.choice {
+    margin: 0 20px;
+}
+
+.back {
+    background-color: #ff000067;
+    color: white;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: green;
+}

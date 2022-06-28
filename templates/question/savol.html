@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>SAVOL: {{ savol.question }}</h1>
+
+<ul class="choice">
+    {% for choice in savol.choice_set.all %}
+    <li><a href="{% url 'poll:check_answer' variant_id=choice.id %}">{{ choice.choice }}</a></li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'poll:create_choice' %}"><div class="btn btn-outline-primary">Variant qo'shish</div></a>
+
+<a href="{% url 'poll:delete_question' id=savol.id %}"><div class="btn btn-outline-danger">Savolni o'chirish</div></a>
+
+{% endblock content %}

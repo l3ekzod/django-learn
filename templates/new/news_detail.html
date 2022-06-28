@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="my-5">
+  <h1>{{ new.title }}</h1>
+</div>
+
+<div class="card p-5">
+    <img src="{{ new.image.url }}" class="card-img-top" alt="{{ new.title }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ new.title }}</h5>
+      <p class="card-text">{{ new.body|safe }}</p>
+      <span class="small badge badge-info bg-primary">{{ new.created }}</span>
+      {% if user.is_authenticated %}
+      <a href="{% url 'new:remove' id=new.id %}" class="btn btn-danger float-end">O'chirish</a>
+      {% endif %}
+    </div>
+
+    <h3 class="my-3">Izohlar</h3>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        Izoh qoldiring!
+      </div>
+      <div class="card-body">
+        <form action="." method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" class="btn btn-outline-success mt-3 float-end" value="Yuborish">
+        </form>
+      </div>
+    </div>
+
+    {% for comment in new.comments.all %}
+    <div class="card mt-4">
+      <div class="card-header">
+        {{ comment.author|default:"Anonim foydalanuvchi" }}
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>{{ comment.body }}</p>
+          <footer class="blockquote-footer">{{ comment.date|date:"d.m.Y" }}</footer>
+        </blockquote>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+{% endblock content %}
