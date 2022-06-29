@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
 
 from .models import New, Comment, Like, Dislike
 from .forms import NewForm, NewFormMine, CommentForm
