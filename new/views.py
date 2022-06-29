@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import New, Comment
+from .models import New, Comment, Like, Dislike
 from .forms import NewForm, NewFormMine, CommentForm
 
 def news_list(request):
@@ -51,3 +51,68 @@ def my_create(request):
             new.save()
             return redirect("new:my_news")
     return render(request, 'new/create.html', {"form": form})
+
+
+def like(request, id):
+    new = get_object_or_404(New, id=id)
+  
+    if request.user.is_authenticated:
+        if new.dislikes.filter(user=request.user).exists():
+            new.dislikes.get(user=request.user).delete()
+
+        if new.likes.filter(user=request.user).exists():
+            new.likes.get(user=request.user).delete()
+            return JsonResponse({
+                "success": True,
+                "message": "Siz reaksiyangizni qaytarib oldingiz!",
+                "likes": new.like_count(),
+                "dislikes": new.dislike_count()
+                }
+            )
+
+        Like.objects.create(user=request.user, post=new)
+        return JsonResponse({
+                "success": True,
+                "message": "Sizga yoqgan postlar safiga qo'shildi!",
+                "likes": new.like_count(),
+                "dislikes": new.dislike_count()
+                }
+            )
+
+    return JsonResponse({
+            "success": False,
+            "message": "Postga reaksiya bildirish uchun iltimos ro'yhatdan o'ting!",
+            }
+        )
+
+# request -> so'rov -> zapros
+def dislike(request, id):
+    new = get_object_or_404(New, id=id)
+    if request.user.is_authenticated:
+        if new.likes.filter(user=request.user).exists():
+            new.likes.get(user=request.user).delete()
+
+        if new.dislikes.filter(user=request.user).exists():
+            new.dislikes.get(user=request.user).delete()
+            return JsonResponse({
+                "success": True,
+                "message": "Siz reaksiyangizni qaytarib oldingiz!",
+                "likes": new.like_count(),
+                "dislikes": new.dislike_count()
+                }
+            )
+
+        Dislike.objects.create(user=request.user, post=new)
+        return JsonResponse({
+                "success": True,
+                "message": "Sizga yoqmagan postlar safiga qo'shildi!",
+                "likes": new.like_count(),
+                "dislikes": new.dislike_count()
+                }
+            )
+
+    return JsonResponse({
+            "success": False,
+            "message": "Postga reaksiya bildirish uchun iltimos ro'yhatdan o'ting!",
+            }
+        )

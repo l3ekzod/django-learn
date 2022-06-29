@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import news_list, news_detail, create, remove,  my_news, my_create
+from .views import news_list, news_detail, create, remove,  my_news, my_create, like, dislike
 
 app_name = "new"
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path('remove/<int:id>/', remove, name="remove"),
     path('my-news/', my_news, name="my_news"),
     path('my-create/', my_create, name="my_create"),
+    path('like/<int:id>/', like, name="like"),
+    path('dislike/<int:id>/', dislike, name="dislike"),
 ]

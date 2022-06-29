@@ -17,6 +17,29 @@
       {% endif %}
     </div>
 
+    <hr>
+
+    <div class="card">
+      <div id="warning">
+        
+      </div>
+      <div id="success">
+        
+      </div>
+      <div class="card-header d-flex justify-content-center">
+        <div class="d-flex align-items-center">
+          <span class="fa fa-thumbs-up fa-2x d-block" id="like" data-url="{% url 'new:like' id=new.id %}"></span>
+          <span class="mx-2" id="like-count">{{ new.like_count|default:0 }}</span>
+        </div>
+        <div class="d-flex align-items-center mx-4">
+          <span class="fa fa-thumbs-down fa-2x d-block" id="dislike" data-url="{% url 'new:dislike' id=new.id %}"></span>
+          <span class="mx-2" id="dislike-count">{{ new.dislike_count|default:0 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
     <h3 class="my-3">Izohlar</h3>
 
     <div class="card mt-4">
