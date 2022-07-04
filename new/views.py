@@ -1,12 +1,24 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
-
+from django.views.generic import ListView
 from .models import New, Comment, Like, Dislike
 from .forms import NewForm, NewFormMine, CommentForm
 
-def news_list(request):
-    news = New.objects.all().order_by('-created')
-    return render(request, 'new/news_list.html', {'news': news})
+
+class News(ListView):
+    queryset = New.objects.all().order_by('-created')
+    template_name = 'new/news_list.html'
+    paginate_by: int = 3
+
+    def get(self, *args, **kwargs):
+        return super().get(*args,**kwargs)
+
+news_list = News.as_view()
+
+# def news_list(request):
+#     news = New.objects.all().order_by('-created')
+#     return render(request, 'new/news_list.html', {'news': news})
+
 
 def news_detail(request, id):
     new = get_object_or_404(New, id=id)

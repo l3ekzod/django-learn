@@ -8,7 +8,7 @@
       <small><a href="{% url 'new:create' %}" class="btn btn-primary float-end">Qo'shish</a></small>
       {% endif %}
     </h1>
-  {% for new in news %}
+  {% for new in object_list %}
   <div class="col-md-4">
     
     <div class="card my-5">
@@ -26,5 +26,33 @@
   {% endfor %}
 </div>
 
+{% comment %} {% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ contact.full_name|upper }}<br>
+    ...
+{% endfor %} {% endcomment %}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+  
+    <li class="page-item">
+        <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+    </li>
+
+    {% for page in page_obj.paginator %}
+    <li class="page-item">
+      <a class = "page-link" href="?page={{ page.number }}">{{ page.number }}</a>
+    </li>
+    {% endfor %}
+
+    <li class="page-item">    
+      <a class="page-link" href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">
+        <i class="fa fa-arrow-right"></i>        
+      </a>     
+    </li>
+  </ul>
+</nav>
 
 {% endblock content %}
